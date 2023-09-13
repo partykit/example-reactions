@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import usePartySocket from "partysocket/react";
+import usePartySocket, { useWebSocket } from "partysocket/react";
 
 const reactionTypes = ["clap", "heart"] as const;
 const reactionEmoji = {
