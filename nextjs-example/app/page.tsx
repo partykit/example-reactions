@@ -16,7 +16,8 @@ export default async function Home() {
 
   // pass initial data to client, which will connect to the room via WebSockets
   return (
-    <main>
+    <main className="p-2">
+      <h1 className="text-3xl font-medium">Welcome to Next.js!</h1>
       <Reactions
         roomHost={roomHost}
         roomId={roomId}

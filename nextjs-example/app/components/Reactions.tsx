@@ -3,7 +3,11 @@
 import { useState } from "react";
 import usePartySocket from "partysocket/react";
 
-const reactionTypes = ["clap", "heart"];
+const reactionTypes = ["clap", "heart"] as const;
+const reactionEmoji = {
+  clap: "👏",
+  heart: "❤️",
+};
 
 type ReactionsProps = {
   initialData: Record<string, number>;
@@ -27,7 +31,7 @@ export const Reactions = (props: ReactionsProps) => {
 
   // render buttons with reaction counts
   return (
-    <div>
+    <div className="flex">
       {reactionTypes.map((kind) => (
         <button
           className="m-2 p-2 border border-white flex space-x-2 hover:bg-gray-800"
@@ -36,7 +40,7 @@ export const Reactions = (props: ReactionsProps) => {
             socket.send(JSON.stringify({ type: "reaction", kind }));
           }}
         >
-          <span>{kind}</span>
+          <span>{reactionEmoji[kind]}</span>
           <span>{reactions[kind] ?? 0}</span>
         </button>
       ))}
