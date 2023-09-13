@@ -29,3 +29,10 @@ h6 {
 #app {
   padding: 1rem;
 }
+
+.reaction:after {
+  content: attr(data-count);
+  display: inline-block;
+  margin-left: 0.5rem;
+  text-align: center;
+}
