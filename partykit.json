@@ -1,5 +1,5 @@
 {
-  "name": "party-reactions",
+  "name": "example-reactions",
   "main": "src/server.ts",
   "serve": {
     "path": "public",
