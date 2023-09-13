@@ -24,7 +24,6 @@ export default class ReactionServer implements Party.Server {
       const message = parseMessage(await req.text());
       this.updateAndBroadcastReactions(message.kind);
     }
-
     // for all HTTP requests, respond with the current reaction counts
     return json(createUpdate(this.reactions));
   }

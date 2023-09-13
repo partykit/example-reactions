@@ -1,12 +1,13 @@
 import z from "zod";
 
-const allowedReactions = [z.literal("clap"), z.literal("heart")] as const;
+const allowedReactions = ["clap", "heart"] as const;
+const allowedReactionsSchema = z.enum(allowedReactions);
 
 // client sends a message either via WebSocket or HTTP
 // { type: "reaction", kind: "clap" }
 const ReactionSchema = z.object({
   type: z.literal("reaction"),
-  kind: z.union(allowedReactions),
+  kind: allowedReactionsSchema,
 });
 
 // server responds with an updated count of reactions
