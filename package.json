@@ -1,0 +1,16 @@
+{
+  "name": "party-reactions",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "partykit dev",
+    "deploy": "partykit deploy"
+  },
+  "dependencies": {
+    "partysocket": "0.0.5"
+  },
+  "devDependencies": {
+    "partykit": "0.0.13",
+    "typescript": "^5.1.6"
+  }
+}
