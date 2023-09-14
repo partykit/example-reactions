@@ -1,7 +1,12 @@
 import "./styles.css";
 
 import PartySocket from "partysocket";
-import { createReactionMessage, parseUpdateMessage } from "./types";
+import {
+  GO_AWAY_SENTINEL,
+  SLOW_DOWN_SENTINEL,
+  createReactionMessage,
+  parseUpdateMessage,
+} from "./types";
 
 declare const PARTYKIT_HOST: string;
 
@@ -39,27 +44,28 @@ let reactions: Record<string, number> = {};
 
 // // You can even start sending messages before the connection is open!
 socket.addEventListener("message", (event) => {
-  const update = parseUpdateMessage(event.data);
-  reactions = { ...reactions, ...update.reactions };
+  if (event.data === SLOW_DOWN_SENTINEL) {
+    console.log("Cool down. You're sending too many messages.");
+    return;
+  }
+  if (event.data === GO_AWAY_SENTINEL) {
+    // server told us to go away. They already closed the connection, but
+    // we'll call socket.close() to stop reconnection attempts
+    console.log("Good bye.");
+    socket.close();
+    return;
+  }
 
-  for (const button of buttons) {
-    if (reactions[button.kind]) {
-      button.element.setAttribute(
-        "data-count",
-        reactions[button.kind].toString()
-      );
+  const message = parseUpdateMessage(event.data);
+  if (message.type === "update") {
+    reactions = { ...reactions, ...message.reactions };
+    for (const button of buttons) {
+      if (reactions[button.kind]) {
+        button.element.setAttribute(
+          "data-count",
+          reactions[button.kind].toString()
+        );
+      }
     }
   }
-  console.log(reactions);
 });
-
-// // Let's listen for when the connection opens
-// // And send a ping every 2 seconds right after
-// conn.addEventListener("open", () => {
-//   add("Connected!");
-//   add("Sending a ping every 2 seconds...");
-//   // TODO: make this more interesting / nice
-//   setInterval(() => {
-//     conn.send("ping");
-//   }, 1000);
-// });
