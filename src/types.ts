@@ -1,5 +1,8 @@
 import z from "zod";
 
+export const SLOW_DOWN_SENTINEL = "slowdown";
+export const GO_AWAY_SENTINEL = "goaway";
+
 const allowedReactions = ["clap", "heart", "thumbsup", "party"] as const;
 const allowedReactionsSchema = z.enum(allowedReactions);
 

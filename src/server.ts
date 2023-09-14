@@ -1,5 +1,6 @@
 import type * as Party from "partykit/server";
 import { createUpdateMessage, parseReactionMessage } from "./types";
+import { rateLimit } from "./limiter";
 
 const json = (response: string) =>
   new Response(response, {
@@ -19,11 +20,6 @@ export default class ReactionServer implements Party.Server {
   }
 
   async onRequest(req: Party.Request) {
-    // client sends HTTP POST: update reaction count
-    if (req.method === "POST") {
-      const message = parseReactionMessage(await req.text());
-      this.updateAndBroadcastReactions(message.kind);
-    }
     // for all HTTP requests, respond with the current reaction counts
     return json(createUpdateMessage(this.reactions));
   }
@@ -33,10 +29,13 @@ export default class ReactionServer implements Party.Server {
     conn.send(createUpdateMessage(this.reactions));
   }
 
-  onMessage(message: string) {
-    // client sends WebSocket message: update reaction count
-    const parsed = parseReactionMessage(message);
-    this.updateAndBroadcastReactions(parsed.kind);
+  onMessage(message: string, sender: Party.Connection) {
+    // rate limit incoming messages
+    rateLimit(sender, 100, () => {
+      // client sends WebSocket message: update reaction count
+      const parsed = parseReactionMessage(message);
+      this.updateAndBroadcastReactions(parsed.kind);
+    });
   }
 
   updateAndBroadcastReactions(kind: string) {
