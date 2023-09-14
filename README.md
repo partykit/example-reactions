@@ -4,7 +4,7 @@ Welcome to the party, pal!
 
 ## Demo
 
-The [demo](https://example-reactions.jevakallio.partykit.dev/) is a website that shows live reaction counters - as soon as someone reacts to your page, the counter is updated on all connected clients.
+The [demo](https://example-reactions.jevakallio.partykit.dev/) is a website that shows live reaction counters - as soon as someone reacts to your content, the counter is updated on all connected clients.
 
 ![Demo of two windows with the live reactions counters](./reactions.gif)
 
