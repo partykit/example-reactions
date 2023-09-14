@@ -57,15 +57,13 @@ socket.addEventListener("message", (event) => {
   }
 
   const message = parseUpdateMessage(event.data);
-  if (message.type === "update") {
-    reactions = { ...reactions, ...message.reactions };
-    for (const button of buttons) {
-      if (reactions[button.kind]) {
-        button.element.setAttribute(
-          "data-count",
-          reactions[button.kind].toString()
-        );
-      }
+  reactions = { ...reactions, ...message.reactions };
+  for (const button of buttons) {
+    if (reactions[button.kind]) {
+      button.element.setAttribute(
+        "data-count",
+        reactions[button.kind].toString()
+      );
     }
   }
 });
