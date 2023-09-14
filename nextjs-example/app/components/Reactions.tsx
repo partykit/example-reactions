@@ -3,10 +3,12 @@
 import { useState } from "react";
 import usePartySocket, { useWebSocket } from "partysocket/react";
 
-const reactionTypes = ["clap", "heart"] as const;
+const reactionTypes = ["clap", "thumbsup", "heart", "party"] as const;
 const reactionEmoji = {
   clap: "👏",
   heart: "❤️",
+  thumbsup: "👍",
+  party: "🎉",
 };
 
 type ReactionsProps = {
