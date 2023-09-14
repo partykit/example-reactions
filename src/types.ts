@@ -1,6 +1,6 @@
 import z from "zod";
 
-const allowedReactions = ["clap", "heart"] as const;
+const allowedReactions = ["clap", "heart", "thumbsup", "party"] as const;
 const allowedReactionsSchema = z.enum(allowedReactions);
 
 // client sends a message either via WebSocket or HTTP
@@ -17,11 +17,11 @@ const ReactionUpdateSchema = z.object({
   reactions: z.record(z.number()),
 });
 
-export const parseMessage = (message: string) => {
+export const parseReactionMessage = (message: string) => {
   return ReactionSchema.parse(JSON.parse(message));
 };
 
-export const createMessage = (kind: string) => {
+export const createReactionMessage = (kind: string) => {
   return JSON.stringify(
     ReactionSchema.parse({
       type: "reaction",
@@ -30,11 +30,11 @@ export const createMessage = (kind: string) => {
   );
 };
 
-export const parseUpdate = (message: string) => {
+export const parseUpdateMessage = (message: string) => {
   return ReactionUpdateSchema.parse(JSON.parse(message));
 };
 
-export const createUpdate = (reactions: Record<string, number>) => {
+export const createUpdateMessage = (reactions: Record<string, number>) => {
   return JSON.stringify(
     ReactionUpdateSchema.parse({
       type: "update",

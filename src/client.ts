@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import PartySocket from "partysocket";
-import { createMessage, parseUpdate } from "./types";
+import { createReactionMessage, parseUpdateMessage } from "./types";
 
 declare const PARTYKIT_HOST: string;
 
@@ -25,7 +25,7 @@ const socket = new PartySocket({
 const buttons = [...document.querySelectorAll(".reaction")].map((button) => {
   const kind = button.getAttribute("data-kind")!;
   button.addEventListener("click", async () => {
-    socket.send(createMessage(kind));
+    socket.send(createReactionMessage(kind));
   });
 
   return {
@@ -39,7 +39,7 @@ let reactions: Record<string, number> = {};
 
 // // You can even start sending messages before the connection is open!
 socket.addEventListener("message", (event) => {
-  const update = parseUpdate(event.data);
+  const update = parseUpdateMessage(event.data);
   reactions = { ...reactions, ...update.reactions };
 
   for (const button of buttons) {
