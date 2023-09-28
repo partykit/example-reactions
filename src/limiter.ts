@@ -17,7 +17,7 @@ export function rateLimit(
 
   // in case we hibernated, load the last known state
   if (!sender.nextAllowedTime) {
-    const limiter = sender.deserializeAttachment() as RateLimiter;
+    const limiter = (sender.deserializeAttachment() ?? {}) as RateLimiter;
     sender.nextAllowedTime = limiter.nextAllowedTime ?? Date.now();
     sender.violations = limiter.violations ?? 0;
   }
