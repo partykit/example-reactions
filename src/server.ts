@@ -31,11 +31,11 @@ export default class ReactionServer implements Party.Server {
 
   onMessage(message: string, sender: Party.Connection) {
     // rate limit incoming messages
-    // rateLimit(sender, 100, () => {
-    // client sends WebSocket message: update reaction count
-    const parsed = parseReactionMessage(message);
-    this.updateAndBroadcastReactions(parsed.kind);
-    // });
+    rateLimit(sender, 100, () => {
+      // client sends WebSocket message: update reaction count
+      const parsed = parseReactionMessage(message);
+      this.updateAndBroadcastReactions(parsed.kind);
+    });
   }
 
   updateAndBroadcastReactions(kind: string) {

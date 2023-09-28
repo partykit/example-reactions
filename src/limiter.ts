@@ -44,6 +44,7 @@ export function rateLimit(
 
   // save rate limiter state in case we hibernate
   sender.serializeAttachment({
+    ...(sender.deserializeAttachment() ?? {}),
     nextAllowedTime: sender.nextAllowedTime,
     violations: sender.violations,
   });
