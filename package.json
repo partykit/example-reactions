@@ -11,7 +11,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "partykit": "0.0.13",
+    "partykit": "^0.0.25",
     "typescript": "^5.1.6"
   }
 }
