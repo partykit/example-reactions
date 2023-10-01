@@ -9,8 +9,8 @@ export default async function Home() {
   const roomId = ROOM_ID;
   const protocol =
     roomHost.startsWith("localhost") || roomHost.startsWith("127.0.0.1")
-      ? "ws"
-      : "wss";
+      ? "http"
+      : "https";
   const req = await fetch(`${protocol}://${roomHost}/party/${roomId}`, {
     method: "GET",
     next: { revalidate: 0 },
