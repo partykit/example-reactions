@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = () => {
+  const rewrites = async () => [
+    {
+      source: "/partykit/:path*",
+      //destination: "http://localhost:1999/:path*",
+      destination: "https://example-reactions.jevakallio.partykit.dev/:path*",
+    },
+  ];
 
-module.exports = nextConfig
+  return {
+    rewrites,
+  };
+};
+
+module.exports = nextConfig;
