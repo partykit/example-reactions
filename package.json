@@ -7,10 +7,12 @@
     "deploy": "partykit deploy"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "partysocket": "0.0.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.199",
     "partykit": "^0.0.26",
     "typescript": "^5.1.6"
   }
