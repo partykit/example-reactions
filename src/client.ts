@@ -43,7 +43,20 @@ const buttons = [...document.querySelectorAll(".reaction")].map((button) => {
 
 let reactions: Record<string, number> = {};
 
-const update = (event: WebSocketEventMap["message"]) => {
+const updateUI = throttle((event: WebSocketEventMap["message"]) => {
+  const message = parseUpdateMessage(event.data);
+  reactions = { ...reactions, ...message.reactions };
+  for (const button of buttons) {
+    if (reactions[button.kind]) {
+      button.element.setAttribute(
+        "data-count",
+        reactions[button.kind].toString()
+      );
+    }
+  }
+}, 50);
+
+socket.addEventListener("message", (event) => {
   if (event.data === SLOW_DOWN_SENTINEL) {
     console.log("Cool down. You're sending too many messages.");
     return;
@@ -56,16 +69,5 @@ const update = (event: WebSocketEventMap["message"]) => {
     return;
   }
 
-  const message = parseUpdateMessage(event.data);
-  reactions = { ...reactions, ...message.reactions };
-  for (const button of buttons) {
-    if (reactions[button.kind]) {
-      button.element.setAttribute(
-        "data-count",
-        reactions[button.kind].toString()
-      );
-    }
-  }
-};
-
-socket.addEventListener("message", throttle(update, 100));
+  updateUI(event);
+});
