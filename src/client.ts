@@ -1,4 +1,5 @@
 import "./styles.css";
+import throttle from "lodash/throttle";
 
 import PartySocket from "partysocket";
 import {
@@ -42,8 +43,7 @@ const buttons = [...document.querySelectorAll(".reaction")].map((button) => {
 
 let reactions: Record<string, number> = {};
 
-// // You can even start sending messages before the connection is open!
-socket.addEventListener("message", (event) => {
+const update = (event: WebSocketEventMap["message"]) => {
   if (event.data === SLOW_DOWN_SENTINEL) {
     console.log("Cool down. You're sending too many messages.");
     return;
@@ -66,4 +66,6 @@ socket.addEventListener("message", (event) => {
       );
     }
   }
-});
+};
+
+socket.addEventListener("message", throttle(update, 100));
