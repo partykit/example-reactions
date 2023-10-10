@@ -1,12 +1,17 @@
 import { Reactions } from "./components/Reactions";
+import { headers } from "next/headers";
 
 const ROOM_ID = "next";
 
 export default async function Home() {
   // fetch initial data in server component for server rendering
-  const roomHost = "example-reactions.jevakallio.partykit.dev";
+  const roomHost = headers().get("host") + "/partykit";
   const roomId = ROOM_ID;
-  const req = await fetch(`https://${roomHost}/party/${roomId}`, {
+  const protocol =
+    roomHost.startsWith("localhost") || roomHost.startsWith("127.0.0.1")
+      ? "http"
+      : "https";
+  const req = await fetch(`${protocol}://${roomHost}/party/${roomId}`, {
     method: "GET",
     next: { revalidate: 0 },
   });
