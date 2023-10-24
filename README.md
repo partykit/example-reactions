@@ -34,7 +34,7 @@ If you'd like to also run the Next.js app, in addition to the previous steps:
 1. `cd` into `nextjs-example`
 2. Run `npm install`
 3. Run `npm run dev`
-4. Open `http://localhost:300/` in your browser
+4. Open `http://localhost:3000/` in your browser
 5. Whenever you change and save the files, the page will automatically reload.
 
 ## Contents
