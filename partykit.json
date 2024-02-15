@@ -2,7 +2,6 @@
   "name": "example-reactions",
   "main": "src/server.ts",
   "compatibilityDate": "2024-02-15",
-  "team": "labs",
   "serve": {
     "path": "public",
     "build": "src/client.ts",
