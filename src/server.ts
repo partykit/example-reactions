@@ -11,12 +11,12 @@ const json = (response: string) =>
 
 export default class ReactionServer implements Party.Server {
   options: Party.ServerOptions = { hibernate: true };
-  constructor(readonly party: Party.Party) {}
+  constructor(readonly room: Party.Room) {}
   reactions: Record<string, number> = {};
 
   async onStart() {
     // load reactions from storage on startup
-    this.reactions = (await this.party.storage.get("reactions")) ?? {};
+    this.reactions = (await this.room.storage.get("reactions")) ?? {};
   }
 
   async onRequest(req: Party.Request) {
@@ -42,9 +42,9 @@ export default class ReactionServer implements Party.Server {
     // update stored reaction counts
     this.reactions[kind] = (this.reactions[kind] ?? 0) + 1;
     // send updated counts to all connected listeners
-    this.party.broadcast(createUpdateMessage(this.reactions));
+    this.room.broadcast(createUpdateMessage(this.reactions));
     // save reactions to disk (fire and forget)
-    this.party.storage.put("reactions", this.reactions);
+    this.room.storage.put("reactions", this.reactions);
   }
 }
 

@@ -8,12 +8,12 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "partysocket": "0.0.5",
-    "zod": "^3.22.2"
+    "partysocket": "0.0.25",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.199",
-    "partykit": "^0.0.27",
-    "typescript": "^5.1.6"
+    "@types/lodash": "^4.14.202",
+    "partykit": "^0.0.90",
+    "typescript": "^5.3.3"
   }
 }
